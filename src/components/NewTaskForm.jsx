@@ -1,38 +1,68 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { Button, Form, Transition } from 'semantic-ui-react';
 import uniqueId from 'lodash.uniqueid';
 import * as actions from '../actions';
 
 const actionsList = {
   addNewTask: actions.addNewTask,
-  switchTopUI: actions.switchTopUI,
+  toggleUITop: actions.toggleUITop,
 };
 
 const NewTaskForm = (props) => {
   const addTask = ({ text }) => {
-    const { addNewTask, switchTopUI, reset: resetForm } = props;
-    const newTask = { id: uniqueId(), text, state: 'active' };
+    const { addNewTask, toggleUITop, reset } = props;
+    const newTask = {
+      id: uniqueId(),
+      state: 'active',
+      text,
+    };
     addNewTask({ task: newTask });
-    switchTopUI({ display: 'default' });
-    resetForm();
+    toggleUITop();
+    reset();
   };
 
   const closeForm = () => {
-    const { switchTopUI } = props;
-    switchTopUI({ display: 'default' });
+    const { toggleUITop } = props;
+    toggleUITop();
   };
 
   const { handleSubmit, submitting, pristine } = props;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(addTask)}>
-        <Field name="text" type="text" component="input" autoFocus required />
-        <button type="submit" disabled={pristine || submitting}>Add</button>
-        <button onClick={closeForm} type="button">X</button>
-      </form>
-    </div>
+    <Transition
+      transitionOnMount
+      animation="fade down"
+    >
+      <Form onSubmit={handleSubmit(addTask)}>
+        <Form.Group
+          widths="equal"
+          className="margined"
+        >
+          <Field
+            name="text"
+            type="text"
+            component={Form.Input}
+            placeholder="I want to do..."
+            autoFocus
+            required
+          />
+          <Button
+            type="submit"
+            disabled={pristine || submitting}
+            content="Add"
+            basic
+          />
+          <Button
+            onClick={closeForm}
+            type="button"
+            content="Cancel"
+            basic
+          />
+        </Form.Group>
+      </Form>
+    </Transition>
   );
 };
 

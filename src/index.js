@@ -4,6 +4,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
 import App from './components/App';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 /* eslint-disable no-underscore-dangle */
@@ -22,4 +23,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-

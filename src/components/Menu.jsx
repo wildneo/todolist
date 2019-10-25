@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { lorem } from 'faker';
-import times from 'lodash.times';
+// eslint-disable-next-line object-curly-newline
+import { Container, Button, Dropdown, Transition, Popup } from 'semantic-ui-react';
 import uniqueId from 'lodash.uniqueid';
+import times from 'lodash.times';
+import { lorem } from 'faker';
 import * as actions from '../actions';
 
 const actionsList = {
   addNewTask: actions.addNewTask,
   clearTasks: actions.clearTasks,
-  switchTopUI: actions.switchTopUI,
+  toggleUITop: actions.toggleUITop,
 };
 
 const Menu = (props) => {
-  const defaultDisplay = { display: 'default' };
-
   const handleRandom = () => {
-    const { addNewTask, clearTasks, switchTopUI } = props;
+    const { addNewTask, clearTasks } = props;
     clearTasks();
     times(5, () => (
       addNewTask({
@@ -26,26 +26,63 @@ const Menu = (props) => {
         },
       })
     ));
-    switchTopUI(defaultDisplay);
   };
 
   const handleClearTasks = () => {
-    const { clearTasks, switchTopUI } = props;
+    const { clearTasks } = props;
     clearTasks();
-    switchTopUI(defaultDisplay);
   };
 
-  const handleCloseMenu = () => {
-    const { switchTopUI } = props;
-    switchTopUI(defaultDisplay);
+  const handleShowForm = () => {
+    const { toggleUITop } = props;
+    toggleUITop();
   };
+
+  const renderAddTaskBtn = () => (
+    <Popup
+      content="Add new task"
+      trigger={(
+        <Button
+          onClick={handleShowForm}
+          floated="right"
+          icon="plus"
+          basic
+        />
+      )}
+    />
+  );
+
+  const renderOptionsBtn = () => (
+    <Popup
+      content="Additional option"
+      trigger={(
+        <Dropdown
+          className="basic icon"
+          icon="ellipsis vertical"
+          button
+        >
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={handleRandom}
+              text="Random tasks"
+            />
+            <Dropdown.Item
+              onClick={handleClearTasks}
+              text="Clear all"
+            />
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
+    />
+  );
 
   return (
-    <div>
-      <button onClick={handleRandom} type="button">Random</button>
-      <button onClick={handleClearTasks} type="button">Clear</button>
-      <button onClick={handleCloseMenu} type="button">X</button>
-    </div>
+    <Transition transitionOnMount>
+      <Container className="margined">
+        {renderAddTaskBtn()}
+        {renderOptionsBtn()}
+      </Container>
+    </Transition>
   );
 };
 

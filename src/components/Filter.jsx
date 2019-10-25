@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Segment, Dropdown } from 'semantic-ui-react';
 import * as actions from '../actions';
 
 const mapStateToProps = ({ tasks: { currentFilterName } }) => {
@@ -24,23 +25,31 @@ const Filter = (props) => {
     setTasksFilter({ filterName });
   };
 
-  const renderButton = ([filterName, title]) => {
-    const { currentFilterName } = props;
+  const renderFilter = ([filterName, title]) => (
+    <Dropdown.Item
+      onClick={handleClick(filterName)}
+      key={filterName}
+      value={title}
+      text={title}
+    />
+  );
 
-    if (filterName === currentFilterName) {
-      return <span key={filterName}>{title}</span>;
-    }
-    return (
-      <button key={filterName} onClick={handleClick(filterName)} type="button">
-        {title}
-      </button>
-    );
-  };
+  const { currentFilterName } = props;
 
   return (
-    <div>
-      {filters.map(renderButton)}
-    </div>
+    <Segment vertical>
+      <Dropdown
+        className="basic icon"
+        text={currentFilterName}
+        labeled
+        button
+        icon="filter"
+      >
+        <Dropdown.Menu
+          content={filters.map(renderFilter)}
+        />
+      </Dropdown>
+    </Segment>
   );
 };
 

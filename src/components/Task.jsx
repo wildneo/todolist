@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button, List, Transition } from 'semantic-ui-react';
+import cn from 'classnames';
 import * as actions from '../actions';
 
 const actionsList = {
@@ -38,24 +40,43 @@ class Task extends React.Component {
 
   render() {
     const { isHovered } = this.state;
-    const { task: { id, text, state } } = this.props;
-    const completed = state === 'complete';
+    const { task: { text, state } } = this.props;
+    const textEclipse = cn({ 'text-eclipse': isHovered });
+    const active = state === 'active';
+    const circle = active ? 'circle outline' : 'check circle outline';
 
     return (
-      <li
+      <List.Item
+        active={active}
+        className="text-truncate relative"
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
       >
-        <input
-          type="checkbox"
-          readOnly
-          id={id}
-          checked={completed}
+        <Transition
+          as={List.Content}
+          visible={isHovered}
+          // animation="scale"
+        >
+          <div className="absolutely">
+            <Button
+              onClick={this.handleTaskRemove}
+              // className="absolutely"
+              icon="trash alternate outline"
+              color="red"
+              compact
+              basic
+            />
+          </div>
+        </Transition>
+        <List.Icon
           onClick={this.handleToggleState}
+          name={circle}
+          link
         />
-        <label htmlFor={id}>{text}</label>
-        {isHovered && <button type="button" onClick={this.handleTaskRemove}>X</button>}
-      </li>
+        <List.Content>
+          <span className={textEclipse}>{text}</span>
+        </List.Content>
+      </List.Item>
     );
   }
 }

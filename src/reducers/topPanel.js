@@ -2,12 +2,16 @@ import { handleActions } from 'redux-actions';
 import * as actions from '../actions';
 
 const defaultState = {
-  display: 'default',
+  formUIState: 'hide',
 };
 
 export default handleActions({
-  [actions.switchTopUI]: (state, { payload: { display } }) => ({
-    ...state,
-    display,
-  }),
+  [actions.toggleUITop]: ({ formUIState }) => {
+    const mapping = {
+      show: 'hide',
+      hide: 'show',
+    };
+
+    return { formUIState: mapping[formUIState] };
+  },
 }, defaultState);

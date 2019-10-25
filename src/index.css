@@ -11,3 +11,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.margined {
+  margin: 0 -.25em 1em -.5em !important;
+}
+
+.absolutely {
+  position: absolute;
+  /* top: 0; */
+  right: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.test {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, white, rgba(255,255,255,0));
+  padding-left: .5em;
+}
+
+.text-eclipse {
+  cursor: default;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.text-eclipse::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+}

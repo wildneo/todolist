@@ -1,46 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Segment } from 'semantic-ui-react';
 import NewTaskForm from './NewTaskForm';
 import Menu from './Menu';
-import * as actions from '../actions';
 
 const mapStateToProps = ({ topPanelUIState }) => {
   const props = topPanelUIState;
   return props;
 };
 
-const actionsList = {
-  switchTopUI: actions.switchTopUI,
-};
-
 const TopPanel = (props) => {
-  const handleShowForm = () => {
-    const { switchTopUI } = props;
-    switchTopUI({ display: 'form' });
-  };
+  const { formUIState } = props;
 
-  const handleShowMenu = () => {
-    const { switchTopUI } = props;
-    switchTopUI({ display: 'menu' });
-  };
-
-  const { display } = props;
-
-  switch (display) {
-    case 'form':
-      return <div><NewTaskForm /></div>;
-
-    case 'menu':
-      return <div><Menu /></div>;
-
-    default:
-      return (
-        <div>
-          <button type="button" onClick={handleShowMenu}>#</button>
-          <button type="button" onClick={handleShowForm}>+</button>
-        </div>
-      );
-  }
+  return (
+    <Segment vertical>
+      {formUIState === 'show'
+        ? <NewTaskForm />
+        : <Menu />}
+    </Segment>
+  );
 };
 
-export default connect(mapStateToProps, actionsList)(TopPanel);
+export default connect(mapStateToProps)(TopPanel);
