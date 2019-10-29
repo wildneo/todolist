@@ -48,33 +48,28 @@ class Task extends React.Component {
     return (
       <List.Item
         active={active}
-        className="text-truncate relative"
+        className="task"
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
       >
-        <Transition
-          as={List.Content}
-          visible={isHovered}
-          // animation="scale"
-        >
-          <div className="absolutely">
+        <Transition visible={isHovered}>
+          <Button.Group className="pop-up-buttons">
             <Button
               onClick={this.handleTaskRemove}
-              // className="absolutely"
               icon="trash alternate outline"
               color="red"
-              compact
               basic
             />
-          </div>
+          </Button.Group>
         </Transition>
         <List.Icon
           onClick={this.handleToggleState}
+          verticalAlign="middle"
           name={circle}
           link
         />
-        <List.Content>
-          <span className={textEclipse}>{text}</span>
+        <List.Content className={textEclipse}>
+          <span>{text}</span>
         </List.Content>
       </List.Item>
     );

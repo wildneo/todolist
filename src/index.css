@@ -7,50 +7,40 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-.margined {
-  margin: 0 -.25em 1em -.5em !important;
-}
-
-.absolutely {
-  position: absolute;
-  /* top: 0; */
-  right: 0;
-}
-
-.relative {
-  position: relative;
-}
-
-.text-truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.test {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to left, white, rgba(255,255,255,0));
-  padding-left: .5em;
-}
-
-.text-eclipse {
+.task {
   cursor: default;
   position: relative;
   width: 100%;
   height: 100%;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+}
+
+.pop-up-buttons {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(
+    -50%,
+    -50%
+  );
+  z-index: 1;
+}
+
+.text-eclipse {
+  position: relative;
 }
 
 .text-eclipse::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
-  width: 15%;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgb(255, 255, 255) 80%
+  );
 }

@@ -43,6 +43,7 @@ const TasksList = (props) => {
         content={items}
         verticalAlign="middle"
         size="huge"
+        divided
         link
       />
     </Segment>

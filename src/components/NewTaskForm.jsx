@@ -35,7 +35,10 @@ const NewTaskForm = (props) => {
       transitionOnMount
       animation="fade down"
     >
-      <Form onSubmit={handleSubmit(addTask)}>
+      <Form
+        onSubmit={handleSubmit(addTask)}
+        autoComplete="off"
+      >
         <Form.Group
           widths="equal"
           className="margined"
@@ -45,13 +48,13 @@ const NewTaskForm = (props) => {
             type="text"
             component={Form.Input}
             placeholder="I want to do..."
-            autoFocus
             required
           />
           <Button
             type="submit"
             disabled={pristine || submitting}
             content="Add"
+            positive
             basic
           />
           <Button
